@@ -2,7 +2,7 @@
 
 ## 🚀 Deploy on Heroku
 
-Easily deploy ** Winx Music** on Heroku:
+
 
 <a href="https://dashboard.heroku.com/new?template=https://github.com/idk20256/WinxMusic"><img src="https://img.shields.io/badge/Deploy%20To%20Heroku-red?style=for-the-badge&logo=heroku" width="200"/></a>
 
@@ -46,7 +46,7 @@ If you need help or have any questions, feel free to reach out via the following
 
 - [GitHub Issues](https://github.com/idk20256/WinxMusic/issues/new?assignees=&labels=question&title=support%3A+&body=%23+Support+Question):
   Open a support issue on GitHub.
-- [Telegram Profile](https://t.me/mrootx): Contact the maintainer directly.
+- [Telegram Profile](https://t.me/cip_e): Contact the maintainer directly.
 - [Telegram Support Group](https://t.me/zeatapistore): Join our support group for live assistance.
 
 ---
@@ -56,17 +56,9 @@ If you need help or have any questions, feel free to reach out via the following
 If you enjoyed **Winx Music** and want to support its development, consider:
 
 - ⭐ [Starring the repository](https://github.com/idk20256/WinxMusic) on GitHub.
-- 🍴 [Forking the repository](https://github.com/idk20256/WinxMusic) and contributing improvements.
-- 📝 Sharing your experience with tutorials or articles on [Dev.to](https://dev.to/), [Medium](https://medium.com/), or
-  your personal blog.
+- 🍴 [Forking the repository](https://github.com/idk20256/WinxMusic) and contributing improvements
 
 Together, we can make **Winx Music** even better!
-
----
-
-## Contributors
-
-[![Contributors](https://contrib.nn.ci/api?repo=idk20256/WinxMusic&radius=100)](https://github.com/idk20256/WinxMusic/graphs/contributors)
 
 ---
 
