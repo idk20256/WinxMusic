@@ -36,7 +36,7 @@ EXTRA_PLUGINS = getenv("EXTRA_PLUGINS", False)
 
 EXTRA_PLUGINS_REPO = getenv(
     "EXTRA_PLUGINS_REPO",
-    "https://github.com/gabrielmaialva33/winx-extra-plugin",
+    "https://github.com/idk20256/winx-extra-plugin",
 )
 # Fill here the external plugins repo where plugins that you want to load
 
@@ -80,10 +80,10 @@ GIT_TOKEN = getenv(
 # Only  Links formats are  accepted for this Var value.
 SUPPORT_CHANNEL = getenv(
     "SUPPORT_CHANNEL", "https://t.me/zeatapistore"
-)  # Example:- https://t.me/cinewinx
+)  # Example:- https://t.me/zeatapistore
 SUPPORT_GROUP = getenv(
     "SUPPORT_GROUP", "https://t.me/zeatapitesti"
-)  # Example:- https://t.me/cinewinxcoments
+)  # Example:- https://t.me/zeatapistore
 
 # Set it in True if you want to leave your assistant after a certain amount of time. [Set time via AUTO_LEAVE_ASSISTANT_TIME]
 AUTO_LEAVING_ASSISTANT = getenv("AUTO_LEAVING_ASSISTANT", False)
@@ -104,7 +104,7 @@ TELEGRAM_DOWNLOAD_EDIT_SLEEP = int(getenv("TELEGRAM_EDIT_SLEEP", "5"))
 
 # Your Github Repo.. Will be shown on /start Command
 GITHUB_REPO = getenv(
-    "GITHUB_REPO", "https://github.com/gabrielmaialva33/flora-music-bot"
+    "GITHUB_REPO", "https://github.com/idk20256/WinxMusic"
 )
 
 # Spotify Client.. Get it from https://developer.spotify.com/dashboard
