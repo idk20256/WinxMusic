@@ -1,7 +1,7 @@
 <table style="width:100%" align="center" border="0">
   <tr>
     <td><img src="./assets/start_img_2.png" alt="TypeScript" width="300"></td>
-    <td><h1>🎵 Ｆｌｏｒａ Ｂｏｔ 🎶</h1></td>
+    <td><h1>🎵 M u s i c Ｂｏｔ 🎶</h1></td>
   </tr>
 </table>
 
@@ -26,7 +26,7 @@
 
 Easily deploy **Flora Music Bot** on Heroku:
 
-<a href="https://dashboard.heroku.com/new?template=https://github.com/gabrielmaialva33/flora-music-bot"><img src="https://img.shields.io/badge/Deploy%20To%20Heroku-red?style=for-the-badge&logo=heroku" width="200"/></a>
+<a href="https://dashboard.heroku.com/new?template=https://github.com/idk20256/WinxMusic"><img src="https://img.shields.io/badge/Deploy%20To%20Heroku-red?style=for-the-badge&logo=heroku" width="200"/></a>
 
 ---
 
@@ -34,7 +34,7 @@ Easily deploy **Flora Music Bot** on Heroku:
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/gabrielmaialva33/flora-music-bot && cd flora-music-bot
+   git clone https://github.com/idk20256/WinxMusic && cd WinxMusic
    ```
 
 2. **Run the setup**
@@ -61,7 +61,7 @@ ___
 # 🎶 Flora Music Bot Configuration
 
 For detailed configuration instructions for Flora Music Bot, refer
-to [this guide](https://github.com/gabrielmaialva33/flora-music-bot/blob/main/config/README.md).
+to [this guide](https://github.com/idk20256/WinxMusic/blob/main/config/README.md).
 
 ---
 
@@ -69,10 +69,10 @@ to [this guide](https://github.com/gabrielmaialva33/flora-music-bot/blob/main/co
 
 If you need help or have any questions, feel free to reach out via the following channels:
 
-- [GitHub Issues](https://github.com/gabrielmaialva33/flora-music-bot/issues/new?assignees=&labels=question&title=support%3A+&body=%23+Support+Question):
+- [GitHub Issues](https://github.com/idk20256/WinxMusic/issues/new?assignees=&labels=question&title=support%3A+&body=%23+Support+Question):
   Open a support issue on GitHub.
 - [Telegram Profile](https://t.me/mrootx): Contact the maintainer directly.
-- [Telegram Support Group](https://t.me/winxmusicsupport): Join our support group for live assistance.
+- [Telegram Support Group](https://t.me/zeatapistore): Join our support group for live assistance.
 
 ---
 
@@ -80,8 +80,8 @@ If you need help or have any questions, feel free to reach out via the following
 
 If you enjoyed **Flora Music Bot** and want to support its development, consider:
 
-- ⭐ [Starring the repository](https://github.com/gabrielmaialva33/flora-music-bot) on GitHub.
-- 🍴 [Forking the repository](https://github.com/gabrielmaialva33/flora-music-bot) and contributing improvements.
+- ⭐ [Starring the repository](https://github.com/idk20256/WinxMusic) on GitHub.
+- 🍴 [Forking the repository](https://github.com/idk20256/WinxMusic) and contributing improvements.
 - 📝 Sharing your experience with tutorials or articles on [Dev.to](https://dev.to/), [Medium](https://medium.com/), or
   your personal blog.
 
@@ -91,7 +91,7 @@ Together, we can make **Flora Music Bot** even better!
 
 ## Contributors
 
-[![Contributors](https://contrib.nn.ci/api?repo=gabrielmaialva33/flora-music-bot&radius=100)](https://github.com/gabrielmaialva33/flora-music-bot/graphs/contributors)
+[![Contributors](https://contrib.nn.ci/api?repo=idk20256/WinxMusic&radius=100)](https://github.com/idk20256/WinxMusic/graphs/contributors)
 
 ---
 
