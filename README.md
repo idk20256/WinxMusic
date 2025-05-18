@@ -24,7 +24,7 @@
 
 ## 🚀 Deploy on Heroku
 
-Easily deploy **Flora Music Bot** on Heroku:
+Easily deploy ** Winx Music** on Heroku:
 
 <a href="https://dashboard.heroku.com/new?template=https://github.com/idk20256/WinxMusic"><img src="https://img.shields.io/badge/Deploy%20To%20Heroku-red?style=for-the-badge&logo=heroku" width="200"/></a>
 
