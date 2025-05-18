@@ -85,13 +85,13 @@ for filename in os.listdir(r"./strings/langs/"):
             languages_present[language_name] = languages[language_name]["name"]
         except KeyError:
             print(
-                "There is an issue with the language file. Please report it to TheTeamvk at @TheTeamvk on Telegram"
+                "There is an issue with the language file. Please report it to TheTeamvk at @durov on Telegram"
             )
             sys.exit()
 
 if not commands:
     print(
-        "There's a problem loading the command files. Please report it to TheTeamVivek at @TheTeamVivek on Telegram"
+        "There's a problem loading the command files. Please report it to TheTeamVivek at @durov on Telegram"
     )
     sys.exit()
 
