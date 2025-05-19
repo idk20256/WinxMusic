@@ -3,13 +3,14 @@ import platform
 from sys import version as pyver
 
 import psutil
-from pyrogram import __version__ as pyrover, Client
+from pyrogram import version as pyrover, Client
 from pyrogram import filters
 from pyrogram.errors import MessageIdInvalid
-from pyrogram.types import CallbackQuery, InputMediaPhoto, Message
-from pytgcalls.__version__ import __version__ as pytgver
+from pyrogram.types import CallbackQuery, Message
+from pytgcalls.version import version as pytgver
 
 import config
+from config.assets import STATS_STICKER_ID, GLOBAL_STICKER_ID
 from WinxMusic import Platform, app
 from WinxMusic.core.userbot import assistants
 from WinxMusic.misc import SUDOERS, pymongodb
@@ -40,17 +41,15 @@ loop = asyncio.get_running_loop()
 GSTATS_COMMAND = get_command("pt")["GSTATS_COMMAND"]
 STATS_COMMAND = get_command("pt")["STATS_COMMAND"]
 
-
 @app.on_message(filters.command(STATS_COMMAND, PREFIXES) & ~BANNED_USERS)
 @language
 async def stats_global(_client: Client, message: Message, _):
     upl = stats_buttons(_, True if message.from_user.id in SUDOERS else False)
-    await message.reply_photo(
-        photo=config.STATS_IMG_URL,
-        caption=_["gstats_11"].format(app.mention) + " 📊",
+    await message.reply_sticker(STATS_STICKER_ID)
+    await message.reply_text(
+        _["gstats_11"].format(app.mention) + " 📊",
         reply_markup=upl,
     )
-
 
 @app.on_message(filters.command(GSTATS_COMMAND, PREFIXES) & ~BANNED_USERS)
 @language
@@ -99,16 +98,14 @@ async def gstats_global(_client: Client, message: Message, _):
         vidid,
     ) = await Platform.youtube.details(videoid, True)
     title = title.title()
-    final = f"🎶 **Faixas mais tocadas no {app.mention}** 🎶\n\n**Título:** {title}\n\nTocada **{co}** vezes"
+    final = f"🎶 Lagu yang paling sering diputar di {app.mention} 🎶\n\nJudul: {title}\n\nDiputar sebanyak {co} kali"
     upl = get_stats_markup(_, True if message.from_user.id in SUDOERS else False)
-    await app.send_photo(
-        message.chat.id,
-        photo=thumbnail,
-        caption=final,
+    await message.reply_sticker(GLOBAL_STICKER_ID)
+    await message.reply_text(
+        final,
         reply_markup=upl,
     )
     await mystic.delete()
-
 
 @app.on_callback_query(filters.regex("GetStatsNow") & ~BANNED_USERS)
 @language_cb
@@ -123,7 +120,7 @@ async def top_users_ten(_client: Client, callback_query: CallbackQuery, _):
         pass
     mystic = await callback_query.edit_message_text(
         _["gstats_3"].format(
-            f"do {callback_query.message.chat.title}" if what == "Here" else what
+            f"dari {callback_query.message.chat.title}" if what == "Here" else what
         )
         + " 🔝"
     )
@@ -166,10 +163,9 @@ async def top_users_ten(_client: Client, callback_query: CallbackQuery, _):
                 details = stats.get(items)
                 title = (details["title"][:35]).title()
                 if items == "telegram":
-                    msg += f"🔗[TelegramVídeos e mídias](https://t.me/telegram) **Tocado {count} vezes**\n\n"
+                    msg += f"🔗[Video dan Media Telegram](https://t.me/telegram) Diputar {count} kali\n\n"
                 else:
-                    msg += f"🔗 [{title}](https://www.youtube.com/watch?v={items}) **Tocado {count} vezes**\n\n"
-
+                    msg += f"🔗 [{title}](https://www.youtube.com/watch?v={items}) Diputar {count} kali\n\n"
             temp = (
                 _["gstats_4"].format(
                     queries,
@@ -206,21 +202,15 @@ async def top_users_ten(_client: Client, callback_query: CallbackQuery, _):
             except Exception:
                 continue
             limit += 1
-            msg += f"🔗`{extract}` Tocou {count} vezes no bot.\n\n"
+            msg += f"🔗{extract} Memutar sebanyak {count} kali di bot.\n\n"
         temp = (
             _["gstats_5"].format(limit, app.mention)
             if what == "Chats"
             else _["gstats_6"].format(limit, app.mention)
         )
         msg = temp + msg
-    med = InputMediaPhoto(media=config.GLOBAL_IMG_URL, caption=msg + " 🎧")
-    try:
-        await callback_query.edit_message_media(media=med, reply_markup=upl)
-    except MessageIdInvalid:
-        await callback_query.message.reply_photo(
-            photo=config.GLOBAL_IMG_URL, caption=msg + " 🎧", reply_markup=upl
-        )
-
+    await callback_query.message.reply_sticker(GLOBAL_STICKER_ID)
+    await callback_query.message.reply_text(msg + " 🎧", reply_markup=upl)
 
 @app.on_callback_query(filters.regex("TopOverall") & ~BANNED_USERS)
 @language_cb
@@ -236,6 +226,7 @@ async def overall_stats(_client: Client, callback_query: CallbackQuery, _):
     except Exception:
         pass
     await callback_query.edit_message_text(_["gstats_8"] + " 📈")
+
     served_chats = len(await get_served_chats())
     served_users = len(await get_served_users())
     total_queries = await get_queries()
@@ -247,41 +238,32 @@ async def overall_stats(_client: Client, callback_query: CallbackQuery, _):
     fetch_playlist = config.PLAYLIST_FETCH_LIMIT
     song = config.SONG_DOWNLOAD_DURATION
     play_duration = config.DURATION_LIMIT_MIN
-    if config.AUTO_LEAVING_ASSISTANT == str(True):
-        ass = "Sim"
-    else:
-        ass = "Não"
-    text = f"""📊 **Estatísticas e informações do Bot:**
+    ass = "Ya" if config.AUTO_LEAVING_ASSISTANT == str(True) else "Tidak"
+    text = f"""📊 Statistik dan Informasi Bot:
 
-🧩 **Módulos importados:** {mod}
-👥 **Chats atendidos:** {served_chats} 
-👤 **Usuários atendidos:** {served_users} 
-🚫 **Usuários bloqueados:** {blocked} 
-🔑 **Usuários Sudo:** {sudoers} 
+🧩 Modul yang diimpor: {mod}
+👥 Chat yang dilayani: {served_chats} 
+👤 Pengguna yang dilayani: {served_users} 
+🚫 Pengguna yang diblokir: {blocked} 
+🔑 Pengguna Sudo: {sudoers} 
 
-🔍 **Total de Consultas:** {total_queries} 
-🤖 **Total de Assistentes:** {assistant}
-💨 **Assistente de Saída Automática:** {ass}
+🔍 Total Query: {total_queries} 
+🤖 Total Asisten: {assistant}
+💨 Asisten Keluar Otomatis: {ass}
 
-⏳ **Duração de Reprodução:** {play_duration} minutos
-🎵 **Download de Música:** {song} minutos
-📀 **Playlist no Servidor do Bot:** {playlist_limit}
-🎶 **Reprodução de Playlist:** {fetch_playlist}"""
-    med = InputMediaPhoto(media=config.STATS_IMG_URL, caption=text)
-    try:
-        await callback_query.edit_message_media(media=med, reply_markup=upl)
-    except MessageIdInvalid:
-        await callback_query.message.reply_photo(
-            photo=config.STATS_IMG_URL, caption=text, reply_markup=upl
-        )
-
+⏳ Durasi Pemutaran: {play_duration} menit
+🎵 Unduh Lagu: {song} menit
+📀 Playlist di Server Bot: {playlist_limit}
+🎶 Pemutaran Playlist: {fetch_playlist}"""
+    await callback_query.message.reply_sticker(STATS_STICKER_ID)
+    await callback_query.message.reply_text(text, reply_markup=upl)
 
 @app.on_callback_query(filters.regex("bot_stats_sudo"))
 @language_cb
 async def overall_stats(_client: Client, callback_query: CallbackQuery, _):
     if callback_query.from_user.id not in SUDOERS:
         return await callback_query.answer(
-            "🔐 Somente para usuários Sudo", show_alert=True
+            "🔐 Hanya untuk pengguna Sudo", show_alert=True
         )
     callback_data = callback_query.data.strip()
     what = callback_data.split(None, 1)[1]
@@ -297,7 +279,7 @@ async def overall_stats(_client: Client, callback_query: CallbackQuery, _):
     sc = platform.system()
     p_core = psutil.cpu_count(logical=False)
     t_core = psutil.cpu_count(logical=True)
-    ram = str(round(psutil.virtual_memory().total / (1024.0 ** 3))) + " GB"
+    ram = str(round(psutil.virtual_memory().total / (1024.0  3))) + " GB"
     try:
         cpu_freq = psutil.cpu_freq().current
         if cpu_freq >= 1000:
@@ -305,13 +287,13 @@ async def overall_stats(_client: Client, callback_query: CallbackQuery, _):
         else:
             cpu_freq = f"{round(cpu_freq, 2)}MHz"
     except Exception:
-        cpu_freq = "Não foi possível obter"
+        cpu_freq = "Tidak dapat diambil"
     hdd = psutil.disk_usage("/")
-    total = hdd.total / (1024.0 ** 3)
+    total = hdd.total / (1024.0  3)
     total = str(total)
-    used = hdd.used / (1024.0 ** 3)
+    used = hdd.used / (1024.0  3)
     used = str(used)
-    free = hdd.free / (1024.0 ** 3)
+    free = hdd.free / (1024.0  3)
     free = str(free)
     mod = int(app.loaded_plug_counts)
     db = pymongodb
@@ -327,40 +309,34 @@ async def overall_stats(_client: Client, callback_query: CallbackQuery, _):
     total_queries = await get_queries()
     blocked = len(BANNED_USERS)
     sudoers = len(await get_sudoers())
-    text = f"""📊 **Estatísticas e informações do Bot:**
+    text = f"""📊 Statistik dan Informasi Bot:
 
-🧩 **Módulos importados:** {mod}
-💻 **Plataforma:** {sc}
-📊 **Memória RAM:** {ram}
-🖥️ **Cores físicas:** {p_core}
-🖥️ **Total de Cores:** {t_core}
-⚙️ **Frequência do CPU:** {cpu_freq}
+🧩 Modul yang diimpor: {mod}
+💻 Platform: {sc}
+📊 RAM: {ram}
+🖥 Core Fisik: {p_core}
+🖥 Total Core: {t_core}
+⚙️ Frekuensi CPU: {cpu_freq}
 
-🐍 **Versão do Python:** {pyver.split()[0]}
-📦 **Versão do Pyrogram:** {pyrover}
-🎧 **Versão do Py-tgcalls:** {pytgver}
-💾 **Armazenamento total:** {total[:4]} GiB
-💽 **Armazenamento usado:** {used[:4]} GiB
-📂 **Armazenamento livre:** {free[:4]} GiB
+🐍 Versi Python: {pyver.split()[0]}
+📦 Versi Pyrogram: {pyrover}
+🎧 Versi Py-tgcalls: {pytgver}
+💾 Total Penyimpanan: {total[:4]} GiB
+💽 Penyimpanan Digunakan: {used[:4]} GiB
+📂 Penyimpanan Tersedia: {free[:4]} GiB
 
-👥 **Chats atendidos:** {served_chats} 
-👤 **Usuários atendidos:** {served_users} 
-🚫 **Usuários bloqueados:** {blocked} 
-🔑 **Usuários Sudo:** {sudoers} 
+👥 Chat yang dilayani: {served_chats} 
+👤 Pengguna yang dilayani: {served_users} 
+🚫 Pengguna yang diblokir: {blocked} 
+🔑 Pengguna Sudo: {sudoers}
 
-🗄️ **Armazenamento total do BD:** {storage} MB
-🗃️ **Total de Coleções do BD:** {collections}
-🔑 **Total de Chaves do BD:** {objects}
-🔍 **Total de Consultas no Bot:** `{total_queries} `
+🗄 Total Penyimpanan Database: {storage} MB
+🗃 Total Koleksi di Database: {collections}
+🔑 Total Kunci di Database: {objects}
+🔍 Total Query pada Bot: {total_queries} 
     """
-    med = InputMediaPhoto(media=config.STATS_IMG_URL, caption=text)
-    try:
-        await callback_query.edit_message_media(media=med, reply_markup=upl)
-    except MessageIdInvalid:
-        await callback_query.message.reply_photo(
-            photo=config.STATS_IMG_URL, caption=text, reply_markup=upl
-        )
-
+    await callback_query.message.reply_sticker(STATS_STICKER_ID)
+    await callback_query.message.reply_text(text, reply_markup=upl)
 
 @app.on_callback_query(
     filters.regex(pattern=r"^(TOPMARKUPGET|GETSTATS|GlobalStats)$") & ~BANNED_USERS
@@ -374,49 +350,25 @@ async def back_buttons(_client: Client, callback_query: CallbackQuery, _):
     command = callback_query.matches[0].group(1)
     if command == "TOPMARKUPGET":
         upl = top_ten_stats_markup(_)
-        med = InputMediaPhoto(
-            media=config.GLOBAL_IMG_URL,
-            caption=_["gstats_9"] + " 🔝",
-        )
-        try:
-            await callback_query.edit_message_media(media=med, reply_markup=upl)
-        except MessageIdInvalid:
-            await callback_query.message.reply_photo(
-                photo=config.GLOBAL_IMG_URL,
-                caption=_["gstats_9"] + " 🔝",
-                reply_markup=upl,
-            )
+        await callback_query.message.reply_sticker(GLOBAL_STICKER_ID)
+        await callback_query.message.reply_text(_["gstats_9"] + " 🔝", reply_markup=upl)
     if command == "GlobalStats":
         upl = get_stats_markup(
             _,
             True if callback_query.from_user.id in SUDOERS else False,
         )
-        med = InputMediaPhoto(
-            media=config.GLOBAL_IMG_URL,
-            caption=_["gstats_10"].format(app.mention) + " 📊",
+        await callback_query.message.reply_sticker(GLOBAL_STICKER_ID)
+        await callback_query.message.reply_text(
+            _["gstats_10"].format(app.mention) + " 📊",
+            reply_markup=upl,
         )
-        try:
-            await callback_query.edit_message_media(media=med, reply_markup=upl)
-        except MessageIdInvalid:
-            await callback_query.message.reply_photo(
-                photo=config.GLOBAL_IMG_URL,
-                caption=_["gstats_10"].format(app.mention) + " 📊",
-                reply_markup=upl,
-            )
     if command == "GETSTATS":
         upl = stats_buttons(
             _,
             True if callback_query.from_user.id in SUDOERS else False,
         )
-        med = InputMediaPhoto(
-            media=config.STATS_IMG_URL,
-            caption=_["gstats_11"].format(app.mention) + " 📊",
+        await callback_query.message.reply_sticker(STATS_STICKER_ID)
+        await callback_query.message.reply_text(
+            _["gstats_11"].format(app.mention) + " 📊",
+            reply_markup=upl,
         )
-        try:
-            await callback_query.edit_message_media(media=med, reply_markup=upl)
-        except MessageIdInvalid:
-            await callback_query.message.reply_photo(
-                photo=config.STATS_IMG_URL,
-                caption=_["gstats_11"].format(app.mention) + " 📊",
-                reply_markup=upl,
-            )
