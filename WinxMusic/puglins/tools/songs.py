@@ -22,6 +22,7 @@ from config import (
     SONG_DOWNLOAD_DURATION,
     SONG_DOWNLOAD_DURATION_LIMIT,
 )
+from config.assets import SONG_STICKER_ID  # Tambahkan import sticker ID untuk song
 from strings import command
 
 
@@ -79,9 +80,10 @@ async def song_commad_private(client, message: Message, _):
 
         await mystic.delete()
 
-        return await message.reply_photo(
-            thumbnail,
-            caption=_["song_4"].format(title),
+        # Ganti thumbnail photo dengan sticker
+        await message.reply_sticker(SONG_STICKER_ID)
+        return await message.reply_text(
+            _["song_4"].format(title),
             reply_markup=InlineKeyboardMarkup(buttons),
         )
 
@@ -120,9 +122,9 @@ async def song_commad_private(client, message: Message, _):
 
     await mystic.delete()
 
-    return await message.reply_photo(
-        thumbnail,
-        caption=_["song_4"].format(title),
+    await message.reply_sticker(SONG_STICKER_ID)
+    return await message.reply_text(
+        _["song_4"].format(title),
         reply_markup=InlineKeyboardMarkup(buttons),
     )
 
@@ -154,7 +156,7 @@ async def song_helper_cb(client, CallbackQuery, _):
 
     try:
 
-        await CallbackQuery.answer(_["song_6"], show_alert=True)
+await CallbackQuery.answer(_["song_6"], show_alert=True)
 
     except Exception:
 
@@ -298,17 +300,14 @@ async def song_download_cb(client, CallbackQuery, _):
 
     title = re.sub("\W+", " ", title)
 
-    thumb_image_path = await CallbackQuery.message.download()
-
+    # thumb_image_path = await CallbackQuery.message.download()
     duration = x["duration"]
 
     if stype == "video":
 
-        thumb_image_path = await CallbackQuery.message.download()
-
-        width = CallbackQuery.message.photo.width
-
-        height = CallbackQuery.message.photo.height
+        # thumb_image_path = await CallbackQuery.message.download()
+        # width = CallbackQuery.message.photo.width
+        # height = CallbackQuery.message.photo.height
 
         try:
 
@@ -324,12 +323,12 @@ async def song_download_cb(client, CallbackQuery, _):
 
             return await mystic.edit_text(_["song_9"].format(e))
 
-        med = InputMediaVideo(
+med = InputMediaVideo(
             media=file_path,
             duration=duration,
-            width=width,
-            height=height,
-            thumb=thumb_image_path,
+            # width=width,
+            # height=height,
+            # thumb=thumb_image_path,
             caption=title,
             supports_streaming=True,
         )
@@ -372,7 +371,7 @@ async def song_download_cb(client, CallbackQuery, _):
         med = InputMediaAudio(
             media=filename,
             caption=title,
-            thumb=thumb_image_path,
+            # thumb=thumb_image_path,
             title=title,
             performer=x["uploader"],
         )
