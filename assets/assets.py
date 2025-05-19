@@ -1,0 +1,1 @@
+PINK_STICKER_ID = ""
